@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">rateme</string>
+    <string name="main_title_welcom">Rateme</string>
+    <string name="main_title_create_new_account">Создать новый аккаунт на Rateme</string>
+    <string name="main_hint_username_login">Имя пользователя</string>
+    <string name="main_hint_phone_login">Моб. телефон</string>
+    <string name="main_hint_password_login">Пароль</string>
+    <string name="main_hint_first_login">Имя и Фамилия</string>
+    <string name="main_text_btn_login">Войти</string>
+    <string name="main_text_btn_register">Регистрация</string>
+    <string name="main_text_create_account">Создать аккаунт</string>
+    <string name="main_text_login_account">Есть аккаунт</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
