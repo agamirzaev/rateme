@@ -1,10 +1,13 @@
 package com.rateme.data.server
 
 import com.rateme.data.model.ResponseToken
+import com.rateme.data.model.bookMarks.ResponseBookMarks
 import com.rateme.data.model.follower.Subscriptions
 import com.rateme.data.model.myProfile.UserResponse
 import com.rateme.data.model.search.ResponseSearchPeople
+import com.rateme.data.model.updateUsername.ResponseUpdateUsername
 import com.rateme.data.model.user.ResponseUser
+import com.rateme.data.model.viewProfile.ResponseViewProfile
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -50,4 +53,25 @@ interface Api {
         @Field("friends_id") friends_id: String,
         @Field("status") request_f: String
     ): Call<Subscriptions>
+
+    @FormUrlEncoded
+    @POST("v1/add_bookmarks.php")
+    fun getBookMarks(
+        @Field("session_id") session_id: String,
+        @Field("user_id") user_id: String
+    ): Call<ResponseBookMarks>
+
+    @FormUrlEncoded
+    @POST("v1/view_profile.php")
+    fun getViewProfile(
+        @Field("session_id") session_id: String,
+        @Field("user_id") user_id: String
+    ): Call<ResponseViewProfile>
+
+    @FormUrlEncoded
+    @POST("profile/update_username.php")
+    fun getUpdateUsername(
+        @Field("session_id") session_id: String,
+        @Field("username") username: String
+    ): Call<ResponseUpdateUsername>
 }

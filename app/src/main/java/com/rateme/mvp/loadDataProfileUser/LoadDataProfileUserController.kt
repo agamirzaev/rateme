@@ -1,6 +1,6 @@
 package com.rateme.mvp.loadDataProfileUser
 
-import com.rateme.data.model.myProfile.UserResponse
+import com.rateme.data.model.bookMarks.ResponseBookMarks
 import com.rateme.data.model.user.ResponseUser
 import com.rateme.mvp.MvpView
 

@@ -1,10 +1,13 @@
 package com.rateme.data
 
 import com.rateme.data.model.ResponseToken
+import com.rateme.data.model.bookMarks.ResponseBookMarks
 import com.rateme.data.model.follower.Subscriptions
 import com.rateme.data.model.myProfile.UserResponse
 import com.rateme.data.model.search.ResponseSearchPeople
+import com.rateme.data.model.updateUsername.ResponseUpdateUsername
 import com.rateme.data.model.user.ResponseUser
+import com.rateme.data.model.viewProfile.ResponseViewProfile
 import com.rateme.data.server.Api
 import com.rateme.data.server.ServicesGenerator
 import retrofit2.Call
@@ -44,4 +47,18 @@ class DataManager {
     ): Call<Subscriptions> {
         return api.getSubscriptions(session_id, friends_id, request_f)
     }
+
+
+    fun getBookMarks(user_id: String, session_id: String): Call<ResponseBookMarks> {
+        return api.getBookMarks(user_id, session_id)
+    }
+
+    fun getViewProfile(user_id: String, session_id: String): Call<ResponseViewProfile> {
+        return api.getViewProfile(user_id, session_id)
+    }
+
+    fun getUpdateUsername(session_id: String, username: String): Call<ResponseUpdateUsername> {
+        return api.getUpdateUsername(session_id, username)
+    }
+
 }

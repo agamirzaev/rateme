@@ -2,7 +2,7 @@ package com.rateme.mvp.loadDataProfileUser
 
 import android.util.Log
 import com.rateme.data.DataManager
-import com.rateme.data.model.myProfile.UserResponse
+import com.rateme.data.model.bookMarks.ResponseBookMarks
 import com.rateme.data.model.user.ResponseUser
 import com.rateme.mvp.BasePresenter
 import retrofit2.Call

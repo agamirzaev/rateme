@@ -1,5 +1,6 @@
 package com.rateme.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -19,6 +21,8 @@ import com.rateme.mvp.loadDataMyProfile.LoadDataMyProfileController
 import com.rateme.mvp.loadDataMyProfile.LoadDataMyProfilePresenter
 import com.rateme.mvp.loadDataProfileUser.LoadDataProfileUserController
 import com.rateme.mvp.loadDataProfileUser.LoadDataProfileUserPresenter
+import com.rateme.ui.activity.EditProfileActivity
+import com.rateme.ui.fragment.bottom_sheet.BottomSheetCreatePostFragment
 import com.rateme.ui.fragment.bottom_sheet.BottomSheetSettingProfileFragment
 import com.rateme.ui.menu.PostRateFragment
 import com.rateme.ui.menu.PostThreeFragment
@@ -44,7 +48,10 @@ class MyProfileFragment : Fragment(), LoadDataMyProfileController.View {
     private lateinit var noInternetProfile: TextView
     private lateinit var btnClickRepeat: AppCompatButton
     private lateinit var progressBarProfile: ProgressBar
-    private lateinit var menu: ImageView
+    private lateinit var settingProfile: ImageView
+    private lateinit var menuProfile: ImageView
+    private lateinit var editProfile: TextView
+    private lateinit var constraintCreate: ConstraintLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,12 +70,16 @@ class MyProfileFragment : Fragment(), LoadDataMyProfileController.View {
         countPost = view.findViewById(R.id.countPost)
         countSubscriptions = view.findViewById(R.id.countSubscriptions)
         countSubscribers = view.findViewById(R.id.countSubscribers)
-        menu = view.findViewById(R.id.menu)
+        settingProfile = view.findViewById(R.id.settingProfile)
+        menuProfile = view.findViewById(R.id.menuProfile)
+        constraintCreate = view.findViewById(R.id.constraintCreate)
 
         nestedScrollViewProfile = view.findViewById(R.id.nestedScrollViewProfile)
         noInternetProfile = view.findViewById(R.id.noInternetProfile)
         btnClickRepeat = view.findViewById(R.id.btnClickRepeat)
         progressBarProfile = view.findViewById(R.id.progressBarProfile)
+
+        editProfile = view.findViewById(R.id.editProfile)
 
         btnClickRepeat.setOnClickListener {
             loadDataMyProfilePresenter.responseMyProfile(
@@ -82,9 +93,22 @@ class MyProfileFragment : Fragment(), LoadDataMyProfileController.View {
             SPreferences.loadIdUser(requireContext()).toString()
         )
 
-        menu.setOnClickListener {
+        constraintCreate.setOnClickListener {
+            val bottomSheetFragment = BottomSheetCreatePostFragment()
+            fragmentManager?.let { it1 -> bottomSheetFragment.show(it1, "TAG") }
+        }
+
+        menuProfile.setOnClickListener {
             val bottomSheetFragment = BottomSheetSettingProfileFragment()
             fragmentManager?.let { it1 -> bottomSheetFragment.show(it1, "TAG") }
+        }
+        settingProfile.setOnClickListener {
+
+        }
+
+        editProfile.setOnClickListener {
+            val intent = Intent(requireContext(), EditProfileActivity::class.java)
+            requireActivity().startActivity(intent)
         }
 
         tabLayoutFragment(PostThreeFragment())
@@ -136,6 +160,10 @@ class MyProfileFragment : Fragment(), LoadDataMyProfileController.View {
                 statusProfileView.text = user.getStatus().toString()
             } else {
                 statusProfileView.visibility = View.GONE
+            }
+
+            statusProfileView.setOnClickListener {
+
             }
 
             firstLastNameProfileView.text = user.getFirstLastName().toString()

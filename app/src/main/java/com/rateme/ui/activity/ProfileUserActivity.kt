@@ -14,12 +14,16 @@ import com.google.android.material.tabs.TabLayout
 import com.rateme.App
 import com.rateme.R
 import com.rateme.adapter.AdapterSearchPeople
+import com.rateme.data.model.bookMarks.ResponseBookMarks
 import com.rateme.data.model.follower.Subscriptions
-import com.rateme.data.model.myProfile.UserResponse
 import com.rateme.data.model.user.ResponseUser
+import com.rateme.data.model.viewProfile.ResponseViewProfile
+import com.rateme.mvp.bookmarks.BookMarksController
+import com.rateme.mvp.bookmarks.BookMarksPresenter
+import com.rateme.mvp.bookmarks.ViewProfileController
+import com.rateme.mvp.bookmarks.ViewProfilePresenter
 import com.rateme.mvp.follower.SubscribersController
 import com.rateme.mvp.follower.SubscribersPresenter
-import com.rateme.mvp.loadDataMyProfile.LoadDataMyProfilePresenter
 import com.rateme.mvp.loadDataProfileUser.LoadDataProfileUserController
 import com.rateme.mvp.loadDataProfileUser.LoadDataProfileUserPresenter
 import com.rateme.ui.menu.PostRateFragment
@@ -30,10 +34,12 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
 class ProfileUserActivity : AppCompatActivity(), LoadDataProfileUserController.View,
-    SubscribersController.View {
+    SubscribersController.View, ViewProfileController.View, BookMarksController.View {
 
     private lateinit var presenter: LoadDataProfileUserPresenter
     private lateinit var subscribersPresenter: SubscribersPresenter
+    private lateinit var bookMarksPresenter: BookMarksPresenter
+    private lateinit var viewProfilePresenter: ViewProfilePresenter
 
     private lateinit var backFromProfile: ImageView
     private lateinit var saveProfile: ImageView
@@ -43,7 +49,6 @@ class ProfileUserActivity : AppCompatActivity(), LoadDataProfileUserController.V
     private lateinit var ratingProfileUserView: TextView
     private lateinit var firstLastNameProfileUserView: TextView
     private lateinit var statusProfileUserView: TextView
-    private lateinit var constraintAddFollow: ConstraintLayout
     private lateinit var textViewFollow: TextView
     private lateinit var constraintInfoProfileUser: ConstraintLayout
     private lateinit var countPostUser: TextView
@@ -59,6 +64,7 @@ class ProfileUserActivity : AppCompatActivity(), LoadDataProfileUserController.V
 
     lateinit var userId: String
     var flagJoin: Boolean = true
+    var flagBookMarks: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +80,6 @@ class ProfileUserActivity : AppCompatActivity(), LoadDataProfileUserController.V
         ratingProfileUserView = findViewById(R.id.ratingProfileUserView)
         firstLastNameProfileUserView = findViewById(R.id.firstLastNameProfileUserView)
         statusProfileUserView = findViewById(R.id.statusProfileUserView)
-        constraintAddFollow = findViewById(R.id.constraintAddFollow)
         textViewFollow = findViewById(R.id.textViewFollow)
         constraintInfoProfileUser = findViewById(R.id.constraintInfoProfileUser)
         countPostUser = findViewById(R.id.countPostUser)
@@ -95,6 +100,13 @@ class ProfileUserActivity : AppCompatActivity(), LoadDataProfileUserController.V
         subscribersPresenter =
             SubscribersPresenter((application as App).dataManager!!)
         subscribersPresenter.attachView(this@ProfileUserActivity)
+
+        bookMarksPresenter = BookMarksPresenter((application as App).dataManager!!)
+        bookMarksPresenter.attachView(this@ProfileUserActivity)
+
+        viewProfilePresenter = ViewProfilePresenter((application as App).dataManager!!)
+        viewProfilePresenter.attachView(this@ProfileUserActivity)
+        viewProfilePresenter.responseViewProfile(SPreferences.loadIdUser(this).toString(), userId)
 
         backFromProfile.setOnClickListener {
             finish()
@@ -181,8 +193,34 @@ class ProfileUserActivity : AppCompatActivity(), LoadDataProfileUserController.V
                 textViewFollow.text = "Подписаться"
                 flagJoin = true
             }
-            
-            constraintAddFollow.setOnClickListener {
+
+            if (user.getBookMarks()!! == 1) {
+                flagBookMarks = false
+                saveProfile.setImageResource(R.drawable.ic_bookmark_true)
+            } else {
+                flagBookMarks = true
+                saveProfile.setImageResource(R.drawable.ic_bookmark_profile)
+            }
+
+            saveProfile.setOnClickListener {
+                flagBookMarks = if (flagBookMarks) {
+                    saveProfile.setImageResource(R.drawable.ic_bookmark_true)
+                    bookMarksPresenter.responseBookMarks(
+                        SPreferences.loadIdUser(this).toString(),
+                        userId
+                    )
+                    false
+                } else {
+                    saveProfile.setImageResource(R.drawable.ic_bookmark_profile)
+                    bookMarksPresenter.responseBookMarks(
+                        SPreferences.loadIdUser(this).toString(),
+                        userId
+                    )
+                    true
+                }
+            }
+
+            textViewFollow.setOnClickListener {
                 if (flagJoin) {
                     subscribersPresenter.responseSubscriptions(
                         SPreferences.loadIdUser(this).toString(),
@@ -203,6 +241,14 @@ class ProfileUserActivity : AppCompatActivity(), LoadDataProfileUserController.V
             }
 
         } catch (e: Exception) {
+        }
+    }
+
+    override fun getBookMarks(bookMarks: ResponseBookMarks) {
+        if (bookMarks.getStatus().toString() == "Add") {
+            Toast.makeText(this, "Пользователь добавлен в сохраненные", Toast.LENGTH_LONG).show()
+        } else if (bookMarks.getStatus().toString() == "Del") {
+            Toast.makeText(this, "Пользователь убран из сохраненных", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -234,4 +280,6 @@ class ProfileUserActivity : AppCompatActivity(), LoadDataProfileUserController.V
         noInternetProfile.visibility = View.VISIBLE
         btnClickRepeat.visibility = View.VISIBLE
     }
+
+    override fun getViewProfile(responseViewProfile: ResponseViewProfile) {}
 }

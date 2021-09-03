@@ -70,6 +70,14 @@ class ResponseUser {
     @Expose
     private val requestUserJoin: Int? = null
 
+    @SerializedName("bookmarks")
+    @Expose
+    private val bookmarks: Int? = null
+
+    fun getBookMarks(): Int? {
+        return bookmarks
+    }
+
     fun getRequestMeJoin(): Int? {
         return requestMeJoin
     }

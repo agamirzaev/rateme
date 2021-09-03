@@ -11,6 +11,7 @@ import com.rateme.R
 import com.rateme.ui.MainActivity
 import com.rateme.ui.fragment.MyProfileFragment
 import com.rateme.ui.fragment.NewsFragment
+import com.rateme.ui.fragment.RatemeFragment
 import com.rateme.ui.fragment.SearchFragment
 
 class MainActivityAccount : AppCompatActivity(),
@@ -43,7 +44,7 @@ class MainActivityAccount : AppCompatActivity(),
                 return true
             }
             R.id.navigation_notif_star -> {
-//                loadFragment(PostFragment())
+                loadFragment(RatemeFragment())
                 return true
             }
             R.id.navigation_profile -> {
@@ -71,5 +72,25 @@ class MainActivityAccount : AppCompatActivity(),
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    override fun onStop() {
+        super.onStop()
     }
 }

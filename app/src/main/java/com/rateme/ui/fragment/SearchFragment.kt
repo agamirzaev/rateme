@@ -10,6 +10,7 @@ import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
@@ -28,6 +29,7 @@ class SearchFragment : Fragment(), SearchPeopleController.View {
     private lateinit var recyclerViewSearch: RecyclerView
     private lateinit var editTextSearch: TextInputEditText
     private lateinit var searchPeoplePresenter: SearchPeoplePresenter
+    private lateinit var progressBarSearch: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,13 +39,15 @@ class SearchFragment : Fragment(), SearchPeopleController.View {
         resultSearch = view.findViewById(R.id.resultSearch)
         recyclerViewSearch = view.findViewById(R.id.recyclerViewSearch)
         editTextSearch = view.findViewById(R.id.editTextSearch)
+        progressBarSearch = view.findViewById(R.id.progressBarSearch)
         searchPeoplePresenter =
             SearchPeoplePresenter((requireActivity().applicationContext as App).dataManager!!)
         searchPeoplePresenter.attachView(this@SearchFragment)
-        searchPeoplePresenter.responseSearchPeople(
-            editTextSearch.text.toString(),
-            SPreferences.loadIdUser(requireContext()).toString()
-        )
+
+//        searchPeoplePresenter.responseSearchPeople(
+//            editTextSearch.text.toString(),
+//            SPreferences.loadIdUser(requireContext()).toString()
+//        )
 
         resultSearch.visibility = View.GONE
 
@@ -55,6 +59,7 @@ class SearchFragment : Fragment(), SearchPeopleController.View {
                 after: Int
             ) {
                 if (editTextSearch.text.toString().trim() == "") {
+                    progressBarSearch.visibility = View.GONE
                     resultSearch.visibility = View.GONE
                     recyclerViewSearch.visibility = View.GONE
                 } else {
@@ -66,6 +71,7 @@ class SearchFragment : Fragment(), SearchPeopleController.View {
 
             override fun onTextChanged(search: CharSequence, start: Int, before: Int, count: Int) {
                 if (editTextSearch.text.toString().trim() == "") {
+                    progressBarSearch.visibility = View.GONE
                     resultSearch.visibility = View.GONE
                     recyclerViewSearch.visibility = View.GONE
                 } else {
@@ -77,6 +83,7 @@ class SearchFragment : Fragment(), SearchPeopleController.View {
 
             override fun afterTextChanged(search: Editable) {
                 if (editTextSearch.text.toString().trim() == "") {
+                    progressBarSearch.visibility = View.GONE
                     resultSearch.visibility = View.GONE
                     recyclerViewSearch.visibility = View.GONE
                 } else {
@@ -102,6 +109,7 @@ class SearchFragment : Fragment(), SearchPeopleController.View {
             )
             resultSearch.text = "Результат поиска: @$search"
         } else {
+            progressBarSearch.visibility = View.GONE
             recyclerViewSearch.visibility = View.GONE
             resultSearch.visibility = View.GONE
         }
@@ -116,15 +124,15 @@ class SearchFragment : Fragment(), SearchPeopleController.View {
     }
 
     override fun showProgress() {
-
+        progressBarSearch.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
-
+        progressBarSearch.visibility = View.GONE
     }
 
     override fun noConnection() {
-
+        progressBarSearch.visibility = View.GONE
     }
 
     override fun notSearchUsers() {

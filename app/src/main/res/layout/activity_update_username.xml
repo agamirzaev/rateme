@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF6F6"
-    tools:context=".ui.fragment.SearchFragment">
+    tools:context=".ui.activity.UpdateUsernameActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/toolbar_main"
@@ -30,7 +30,8 @@
                 android:layout_marginStart="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="280dp"
+                    android:id="@+id/constraintClickBack"
+                    android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:background="@drawable/selector_menu_left_profile"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -38,47 +39,33 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:id="@+id/iconSearch"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginStart="16dp"
-                        android:src="@drawable/ic_menu_bottom_search"
+                        android:src="@drawable/ic_back_profile_user"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextSearch"
-                        android:layout_width="214dp"
-                        android:layout_height="20dp"
-                        android:layout_marginStart="16dp"
-                        android:background="@drawable/selector_menu_left_profile"
-                        android:fontFamily="@font/sora_regular"
-                        android:hint="Поиск людей"
-                        android:imeOptions="actionSearch"
-                        android:inputType="text"
-                        android:textColor="@color/teal_200"
-                        android:textColorHint="#80721C6E"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toRightOf="@+id/iconSearch"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintAddPost"
-                    android:layout_width="40dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:background="@drawable/selector_menu_left_profile"
+                    android:layout_marginStart="26dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/constraintClickBack"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
-                        android:id="@+id/addPost"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_sort_toolbar_search"
+                    <TextView
+                        android:id="@+id/settingProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sora_semi_bold"
+                        android:gravity="center_horizontal"
+                        android:text="Имя пользователя"
+                        android:textColor="#721C6E"
+                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
@@ -94,49 +81,69 @@
         android:id="@+id/nestedScrollViewProfile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="26dp"
         android:visibility="visible"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:layout_marginTop="6dp">
 
-            <ProgressBar
-                android:id="@+id/progressBarSearch"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginStart="14dp"
-                android:layout_marginTop="3dp"
-                android:visibility="gone"
-                app:layout_constraintLeft_toLeftOf="parent"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/usernameEditUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Имя пользователя"
+                android:inputType="text"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:textColor="#721C6E"
+                android:textColorHint="#9A721C6E"
+                android:textSize="14sp"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/resultSearch"
+                android:id="@+id/titleInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="16dp"
-                android:fontFamily="@font/sora_medium"
-                android:text=""
-                android:textColor="@color/teal_700"
-                app:layout_constraintLeft_toRightOf="@+id/progressBarSearch"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewSearch"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="16dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/sora_regular"
+                android:text="Имя пользователя можно менять раз в неделю"
+                android:textColor="#99721C6E"
+                android:textSize="12sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/resultSearch" />
+                app:layout_constraintTop_toBottomOf="@+id/usernameEditUpdate" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnUpdateUsername"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/shape_profile_edit"
+                android:paddingStart="36dp"
+                android:paddingEnd="36dp"
+                android:text="Изменить"
+                android:textAllCaps="false"
+                android:textColor="#721C6E"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleInfo" />
+
+            <TextView
+                android:id="@+id/resultUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="26dp"
+                android:text=""
+                android:textColor="#AA23A4"
+                app:layout_constraintLeft_toRightOf="@+id/btnUpdateUsername"
+                app:layout_constraintTop_toBottomOf="@+id/titleInfo" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

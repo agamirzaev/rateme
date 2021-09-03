@@ -18,7 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Rateme">
-        <activity android:name=".ui.activity.ProfileUserActivity"></activity>
+        <activity android:name=".ui.activity.UpdateUsernameActivity"></activity>
+        <activity android:name=".ui.activity.EditProfileActivity" />
+        <activity android:name=".ui.activity.ProfileUserActivity" />
         <activity android:name=".ui.activity.MainActivityAccount" />
         <activity android:name=".ui.activity.MainActivityAccount" />
         <activity android:name=".ui.MainViewActivity" />
